@@ -16,25 +16,25 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center py-4 px-4 lg:px-20">
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-light m-0">
+      <h1 data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className="text-3xl md:text-4xl lg:text-5xl font-light m-0">
         Yov Portfo
       </h1>
 
       {/* NavBar */}
       <nav className="hidden md:flex items-center gap-12">
-        <a className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
+        <a data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000" className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
           Company
         </a>
         
-        <a className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
-          Feature
+        <a data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
+          Features
         </a>
 
-        <a className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
-          Resource
+        <a data-aos="fade-down" data-aos-easing="linear" data-aos-duration="2000" className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
+          Resources
         </a>
 
-        <a className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
+        <a data-aos="fade-down" data-aos-easing="linear" data-aos-duration="2500" className="text-base tracking-wider transition-colors hover:text-gray-300 z-50" href="#">
           Docs
         </a>
       </nav>
