@@ -64,7 +64,7 @@
   }
   
   .btn-retro {
-    @apply text-xl px-6 py-2 transition-transform duration-75 retro-border bg-pastel-lavender text-black dark:bg-accent dark:text-black;
+    @apply text-xl px-6 py-2 transition-transform duration-75 retro-border bg-pastel-lavender text-[rgb(34,48,65)] dark:bg-accent dark:text-[rgb(255,253,222)];
     font-family: 'VT323', monospace;
     box-shadow: 4px 4px 0px 0px rgba(var(--color-shadow) / 1);
   }

@@ -30,7 +30,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
       .replace(/^./, (str) => str.toUpperCase());
   };
 
-  const ProjectImage = ({ src, alt, label, heightClass = "h-40" }) => {
+  const ProjectImage = ({ src, alt, label, heightClass = "h-40", contain = false, clickable = false }) => {
     const [error, setError] = useState(false);
     const imageSrc = src ? `${import.meta.env.BASE_URL}${src}` : null;
 
@@ -40,17 +40,29 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
       );
     }
 
-    return (
+    const image = (
       <div className={`relative ${heightClass} w-full overflow-hidden retro-border bg-surface`}>
         <img
           src={imageSrc}
           alt={alt || label}
           onError={() => setError(true)}
-          className="h-full w-full object-cover object-center transition-transform duration-500 hover:scale-[1.03]"
+          className={`h-full w-full object-center transition-transform duration-500 ${contain ? 'object-contain p-3' : 'object-cover hover:scale-[1.03]'}`}
         />
         <div className="absolute inset-0 bg-black/10 dark:bg-black/30 pointer-events-none" />
       </div>
     );
+
+    return clickable ? (
+      <a
+        href={imageSrc}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${alt || label} image`}
+        className="block focus-ring"
+      >
+        {image}
+      </a>
+    ) : image;
   };
 
   const ProjectVideo = ({ src, heightClass = "h-64 sm:h-[400px]" }) => {
@@ -73,6 +85,21 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
     );
   };
 
+  const ProjectWebsite = ({ src, heightClass = "h-64 sm:h-[400px]" }) => {
+    if (!src) return null;
+
+    return (
+      <div className={`relative ${heightClass} w-full overflow-hidden retro-border bg-surface`}>
+        <iframe
+          src={src}
+          title="Live project preview"
+          loading="lazy"
+          className="h-full w-full border-0 bg-white"
+        />
+      </div>
+    );
+  };
+
   const StoryVisual = ({ title, image, caption, heightClass = 'h-80 sm:h-96' }) => (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -91,14 +118,14 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 
   const ScooterArchitecture = () => {
     const nodes = [
-      { name: "GPS NEO-6M", desc: "Data Lokasi & Kecepatan", icon: "bx-map-pin", color: "border-accent/40" },
-      { name: "ESP32 Transmitter", desc: "Pemrosesan & Enkapsulasi", icon: "bx-chip", color: "border-accent/60 bg-accent/5" },
-      { name: "LoRa SX1278 (TX)", desc: "Transmisi Frekuensi Radio", icon: "bx-broadcast", color: "border-orange-500/40" },
-      { name: "LoRa SX1278 (RX)", desc: "Penerimaan Gateway", icon: "bx-broadcast", color: "border-orange-500/40" },
-      { name: "ESP32 Receiver", desc: "Penerusan Data Serial", icon: "bx-chip", color: "border-accent/60 bg-accent/5" },
+      { name: "GPS NEO-6M", desc: "Location & Speed Data", icon: "bx-map-pin", color: "border-accent/40" },
+      { name: "ESP32 Transmitter", desc: "Processing & Encapsulation", icon: "bx-chip", color: "border-accent/60 bg-accent/5" },
+      { name: "LoRa SX1278 (TX)", desc: "Long-Range Radio Transmission", icon: "bx-broadcast", color: "border-orange-500/40" },
+      { name: "LoRa SX1278 (RX)", desc: "Gateway Packet Reception", icon: "bx-broadcast", color: "border-orange-500/40" },
+      { name: "ESP32 Receiver", desc: "Data Forwarding", icon: "bx-chip", color: "border-accent/60 bg-accent/5" },
       { name: "MQTT Broker", desc: "Pub/Sub Messaging Layer", icon: "bx-server", color: "border-blue-500/40" },
-      { name: "MySQL Database", desc: "Penyimpanan Riwayat", icon: "bx-data", color: "border-green-500/40" },
-      { name: "Web Dashboard", desc: "Pemantauan Real-time", icon: "bx-desktop", color: "border-accent shadow-[0_0_15px_rgba(var(--color-accent),0.2)]" }
+      { name: "MySQL Database", desc: "Telemetry History Storage", icon: "bx-data", color: "border-green-500/40" },
+      { name: "Web Dashboard", desc: "Real-Time Monitoring", icon: "bx-desktop", color: "border-accent shadow-[0_0_15px_rgba(var(--color-accent),0.2)]" }
     ];
 
     return (
@@ -107,7 +134,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
         <div className="hidden md:flex flex-wrap items-center justify-center gap-y-6 gap-x-3">
           {nodes.map((node, index) => (
             <div key={index} className="flex items-center">
-              <div className={`flex flex-col items-center w-32 p-3 retro-border bg-surface text-center ${node.color} transition-all duration-300 hover:scale-105 hover:bg-pastel-cream`}>
+              <div className={`flex flex-col items-center w-32 p-3 retro-border bg-surface text-center ${node.color} transition-all duration-300 hover:scale-105 hover:bg-pastel-cream dark:hover:bg-surface-light`}>
                 <div className="w-8 h-8 retro-border bg-surface-light flex items-center justify-center text-text-primary text-base mb-1.5">
                   <i className={`bx ${node.icon}`}></i>
                 </div>
@@ -117,10 +144,10 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
               
               {index < nodes.length - 1 && (
                 <div className="flex flex-col items-center px-0.5">
-                  <div className="relative w-6 h-[2px] bg-accent/30">
+                  <div className="relative w-6 h-[2px] bg-[rgb(34,48,65)]/60">
                     <div className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent animate-ping" style={{ animationDelay: `${index * 0.25}s`, animationDuration: '2s' }}></div>
                   </div>
-                  <i className="bx bx-chevron-right text-accent/50 text-[10px] mt-0.5"></i>
+                  <i className="bx bx-chevron-right text-[rgb(34,48,65)] text-xl font-bold mt-0.5"></i>
                 </div>
               )}
             </div>
@@ -143,10 +170,10 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
               
               {index < nodes.length - 1 && (
                 <div className="flex flex-col items-center py-1.5">
-                  <div className="relative w-[2px] h-4 bg-accent/30">
+                  <div className="relative w-[2px] h-4 bg-[rgb(34,48,65)]/60">
                     <div className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent animate-ping" style={{ animationDelay: `${index * 0.25}s`, animationDuration: '2s' }}></div>
                   </div>
-                  <i className="bx bx-chevron-down text-accent/50 text-[10px]"></i>
+                  <i className="bx bx-chevron-down text-[rgb(34,48,65)] text-xl font-bold"></i>
                 </div>
               )}
             </div>
@@ -188,7 +215,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                 className={`px-3 py-1.5 font-retro uppercase tracking-widest text-xs transition-all duration-300 cursor-pointer retro-border focus-ring ${
                   activeTab === key
                     ? 'bg-pastel-lime text-[rgb(34,48,65)] shadow-[2px_2px_0_rgba(var(--color-shadow))]'
-                    : 'bg-surface text-text-primary hover:bg-pastel-cream hover:text-[rgb(34,48,65)]'
+                    : 'bg-surface text-text-primary hover:bg-pastel-cream hover:text-[rgb(34,48,65)] dark:hover:bg-surface-light dark:hover:text-[rgb(255,253,222)]'
                 }`}
               >
                 {key === 'transmitter' ? 'Transmitter (C++)' : key === 'receiver' ? 'Receiver (C++)' : 'Dashboard (JS)'}
@@ -254,7 +281,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
           </div>
           <button
             onClick={onClose}
-            className="flex items-center justify-center w-10 h-10 retro-border bg-white text-black hover:bg-pastel-cream transition-transform hover:-translate-y-1 shadow-[2px_2px_0_rgba(var(--color-shadow))] focus-ring"
+            className="flex items-center justify-center w-10 h-10 retro-border bg-white text-black hover:bg-pastel-cream dark:hover:bg-surface-light dark:hover:text-[rgb(255,253,222)] transition-transform hover:-translate-y-1 shadow-[2px_2px_0_rgba(var(--color-shadow))] focus-ring"
             aria-label="Close project modal"
           >
             <i className="bx bx-x text-2xl"></i>
@@ -299,9 +326,11 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
               </div>
             )}
 
-            {(details.heroVideo || details.heroImage || project.image) && (
+            {(details.heroWebsite || details.heroVideo || details.heroImage || project.image) && (
               <div className="mt-6 w-full">
-                {details.heroVideo ? (
+                {details.heroWebsite ? (
+                  <ProjectWebsite src={details.heroWebsite} heightClass="h-64 sm:h-[400px]" />
+                ) : details.heroVideo ? (
                   <ProjectVideo src={details.heroVideo} heightClass="h-64 sm:h-[400px]" />
                 ) : (
                   <ProjectImage 
@@ -346,13 +375,13 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                 </h3>
                 <div className="grid gap-4 md:grid-cols-3">
                   {Object.entries(details.myRole).map(([key, items]) => (
-                    <div key={key} className="retro-card bg-surface hover:bg-pastel-cream transition-colors">
-                      <h4 className="mb-3 text-lg font-retro font-bold uppercase tracking-widest text-text-primary">
+                    <div key={key} className="retro-card bg-surface hover:bg-pastel-cream dark:hover:bg-surface-light transition-colors">
+                      <h4 className="mb-3 text-lg font-retro font-bold uppercase tracking-widest text-text-primary dark:text-[rgb(255,253,222)]">
                         {formatRoleTitle(key)}
                       </h4>
                       <ul className="space-y-2">
                         {items.map((item, index) => (
-                          <li key={`${key}-${index}`} className="flex items-start gap-2 text-sm text-text-secondary">
+                          <li key={`${key}-${index}`} className="flex items-start gap-2 text-sm text-text-secondary dark:text-[rgb(188,216,236)]">
                             <span className="text-pastel-blue text-xs mt-[2px]">▶</span>
                             <span className="leading-relaxed">{item}</span>
                           </li>
@@ -378,8 +407,18 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 
               {details.architecture && (
                 <div className="mb-6">
+                  {details.architectureImage && (
+                    <ProjectImage
+                      src={details.architectureImage}
+                      alt="System Architecture"
+                      label="System Architecture"
+                      heightClass="h-64 sm:h-96"
+                      contain
+                      clickable
+                    />
+                  )}
                   {project.title.includes("Scooter") ? (
-                    <ScooterArchitecture />
+                    !details.architectureImage && <ScooterArchitecture />
                   ) : (
                     <div className="mb-4 retro-card bg-surface-dark p-4">
                       <pre className="whitespace-pre-wrap text-sm leading-7 text-text-secondary font-mono">
@@ -410,21 +449,21 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                   {details.features.map((feature, i) => {
                     const isObject = typeof feature === 'object';
                     return (
-                      <div key={i} className="retro-card bg-surface hover:bg-pastel-cream transition-colors p-4 group">
+                      <div key={i} className="retro-card bg-surface text-[rgb(34,48,65)] dark:text-[rgb(255,253,222)] hover:bg-pastel-cream dark:hover:bg-surface-light transition-colors p-4 group">
                         {isObject ? (
                           <div className="flex items-start gap-4">
                             <div className="flex items-center justify-center w-10 h-10 retro-border bg-white text-black text-xl shrink-0 group-hover:scale-110 transition-transform">
                               <i className={feature.icon || "bx bx-check-circle"}></i>
                             </div>
                             <div>
-                              <h4 className="text-lg font-retro font-bold text-text-primary uppercase tracking-widest mb-1 group-hover:text-black">{feature.title}</h4>
-                              <p className="text-sm text-text-secondary leading-relaxed group-hover:text-gray-800">{feature.description}</p>
+                              <h4 className="text-lg font-retro font-bold text-[rgb(34,48,65)] dark:text-[rgb(255,253,222)] uppercase tracking-widest mb-1">{feature.title}</h4>
+                              <p className="text-sm text-[rgb(34,48,65)] dark:text-[rgb(255,253,222)] leading-relaxed">{feature.description}</p>
                             </div>
                           </div>
                         ) : (
                           <div className="flex items-center gap-3">
                             <span className="text-pastel-pink text-xs">▶</span>
-                            <p className="text-sm text-text-secondary leading-relaxed group-hover:text-black">{feature}</p>
+                            <p className="text-sm text-[rgb(34,48,65)] dark:text-[rgb(255,253,222)] leading-relaxed">{feature}</p>
                           </div>
                         )}
                       </div>
@@ -460,10 +499,12 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                       ))}
                     </ul>
                     <ProjectImage
-                      src={`images/projects/scooter/${key}.jpg`}
+                      src={`images/projects/scooter/${key === 'transmitter' ? 'Transmitter' : 'Receiver'}.png`}
                       alt={formatRoleTitle(key)}
                       label={`${formatRoleTitle(key)} Photo`}
                       heightClass="h-44"
+                      contain
+                      clickable
                     />
                   </div>
                 ))}
@@ -527,33 +568,11 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
               <ul className="grid gap-3 md:grid-cols-2">
                 {details.results.map((result, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <i className="bx bx-check-circle text-pastel-lime mt-[2px]"></i>
+                    <i className="bx bx-check-circle text-[rgb(34,48,65)] dark:text-[rgb(255,253,222)] text-lg mt-[1px] shrink-0"></i>
                     <span className="leading-relaxed">{result}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-
-          {/* Gallery */}
-          {details.gallery && (
-            <div className="mb-8">
-              <h3 className="text-xl font-retro font-bold mb-4 text-text-primary flex items-center gap-2 uppercase tracking-widest">
-                <i className="bx bx-image text-pastel-blue"></i>
-                Gallery
-              </h3>
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {details.gallery.map((item, index) => (
-                  <div key={index} className="retro-card bg-surface p-3">
-                    <ProjectImage
-                      src={item.image}
-                      alt={item.title}
-                      label={item.title}
-                      heightClass="h-36"
-                    />
-                  </div>
-                ))}
-              </div>
             </div>
           )}
 

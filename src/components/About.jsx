@@ -133,12 +133,12 @@ const About = () => {
               {techStack.map((tech) => (
                 <div
                   key={tech.label}
-                  className="group flex flex-col items-center gap-2 p-3 retro-card bg-surface hover:bg-pastel-cream hover:text-[rgb(34,48,65)] transition-colors hover:-translate-y-1 cursor-default"
+                  className="group flex flex-col items-center gap-2 p-3 retro-card bg-surface hover:bg-pastel-cream dark:hover:bg-surface-light hover:text-[rgb(34,48,65)] dark:hover:text-[rgb(255,253,222)] transition-colors hover:-translate-y-1 cursor-default"
                 >
-                  <span className="text-3xl text-text-primary transition-transform group-hover:scale-110 group-hover:text-[rgb(34,48,65)]">
+                  <span className="text-3xl text-text-primary transition-transform group-hover:scale-110 group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)]">
                     {tech.icon}
                   </span>
-                  <span className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-[rgb(34,48,65)] uppercase mt-1">
+                  <span className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)] uppercase mt-1">
                     {tech.label}
                   </span>
                 </div>

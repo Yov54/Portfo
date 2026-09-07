@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import 'boxicons/css/boxicons.min.css';
 import ProjectModal from './ui/ProjectModal';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -30,15 +30,23 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeTimerRef = useRef(null);
 
   const openModal = (project) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
     setSelectedProject(project);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setTimeout(() => setSelectedProject(null), 300); // wait for fade out
+    closeTimerRef.current = setTimeout(() => {
+      setSelectedProject(null);
+      closeTimerRef.current = null;
+    }, 300); // wait for fade out
   };
 
   useEffect(() => {
@@ -103,12 +111,15 @@ const Projects = () => {
         {categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => setActiveFilter(cat)}
+            onClick={() => {
+              setActiveFilter(cat);
+              if (isModalOpen) closeModal();
+            }}
             aria-pressed={activeFilter === cat}
             className={`whitespace-nowrap px-4 py-1.5 font-retro text-xl uppercase tracking-wider transition-all duration-200 flex-shrink-0 cursor-pointer retro-border focus-ring ${
               activeFilter === cat
                 ? 'bg-pastel-blue text-[rgb(34,48,65)] shadow-[4px_4px_0_rgba(var(--color-shadow))] -translate-y-0.5'
-                : 'bg-surface text-text-primary shadow-[2px_2px_0_rgba(var(--color-shadow))] hover:-translate-y-1 hover:bg-pastel-cream hover:text-[rgb(34,48,65)]'
+                : 'bg-surface text-text-primary shadow-[2px_2px_0_rgba(var(--color-shadow))] hover:-translate-y-1 hover:bg-pastel-cream dark:hover:bg-surface-light hover:text-[rgb(34,48,65)] dark:hover:text-[rgb(255,253,222)]'
             }`}
           >
             {cat}
@@ -123,10 +134,10 @@ const Projects = () => {
         </div>
       ) : (
         <motion.div 
+          key={activeFilter}
           variants={containerVariants}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
@@ -142,7 +153,7 @@ const Projects = () => {
                   tabIndex={0}
                   onClick={() => openModal(project)}
                   onKeyDown={(e) => handleKeyDown(e, project)}
-                  className="group cursor-pointer retro-card !p-0 overflow-hidden flex flex-col bg-surface hover:bg-pastel-cream focus-visible:bg-pastel-cream transition-colors focus-ring"
+                  className="group cursor-pointer retro-card !p-0 overflow-hidden flex flex-col bg-surface hover:bg-pastel-cream dark:hover:bg-surface-light focus-visible:bg-pastel-cream dark:focus-visible:bg-surface-light transition-colors focus-ring"
                 >
                   {/* Solid Pastel Placeholder Image / Icon */}
                   <div
@@ -170,17 +181,17 @@ const Projects = () => {
                   {/* Card Content */}
                   <div className="p-5 flex-1 flex flex-col">
                     {/* Category Label */}
-                    <span className="text-pastel-pink dark:text-accent-light font-retro text-lg tracking-widest uppercase mb-1 group-hover:text-[rgb(200,100,120)] dark:group-hover:text-[rgb(200,100,120)]">
+                    <span className="text-pastel-pink dark:text-accent-light font-retro text-lg tracking-widest uppercase mb-1">
                       {project.category}
                     </span>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-retro font-bold tracking-wide mt-1 mb-2 text-text-primary group-hover:text-[rgb(34,48,65)] transition-colors duration-300 line-clamp-1">
+                    <h3 className="text-2xl font-retro font-bold tracking-wide mt-1 mb-2 text-text-primary transition-colors duration-300 line-clamp-1">
                       {project.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-3 group-hover:text-[rgb(60,72,85)] transition-colors">
+                    <p className="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-3 transition-colors">
                       {project.description}
                     </p>
 
@@ -189,7 +200,7 @@ const Projects = () => {
                       {project.tech.map((t) => (
                         <span
                           key={t}
-                          className="bg-surface text-text-secondary border border-text-secondary/30 text-xs px-2 py-0.5 font-retro tracking-widest uppercase group-hover:bg-[rgb(255,255,255)] group-hover:text-[rgb(34,48,65)] group-hover:border-[rgb(34,48,65)]/40 transition-colors"
+                          className="bg-surface text-text-secondary border border-text-secondary/30 text-xs px-2 py-0.5 font-retro tracking-widest uppercase transition-colors"
                         >
                           {t}
                         </span>
@@ -197,14 +208,14 @@ const Projects = () => {
                     </div>
 
                     {/* Action Links */}
-                    <div className="flex items-center gap-4 pt-3 border-t-2 border-border/20 group-hover:border-[rgb(34,48,65)]/20">
+                    <div className="flex items-center gap-4 pt-3 border-t-2 border-border/20">
                       <a
                         href={project.github}
                         onClick={(e) => e.stopPropagation()}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Open ${project.title} on GitHub`}
-                        className="flex items-center gap-2 font-retro text-lg text-text-primary hover:text-pastel-pink group-hover:text-[rgb(34,48,65)] group-hover:hover:text-pastel-pink transition-colors duration-300 focus-ring px-1"
+                        className="flex items-center gap-2 font-retro text-lg text-text-primary hover:text-pastel-pink transition-colors duration-300 focus-ring px-1"
                       >
                         <i className="bx bxl-github text-xl" aria-hidden="true"></i>
                         CODE
@@ -216,7 +227,7 @@ const Projects = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Open live demo for ${project.title}`}
-                          className="flex items-center gap-2 font-retro text-lg text-text-primary hover:text-pastel-pink group-hover:text-[rgb(34,48,65)] group-hover:hover:text-pastel-pink transition-colors duration-300 focus-ring px-1"
+                          className="flex items-center gap-2 font-retro text-lg text-text-primary hover:text-pastel-pink transition-colors duration-300 focus-ring px-1"
                         >
                           <i className="bx bx-play-circle text-xl" aria-hidden="true"></i>
                           DEMO

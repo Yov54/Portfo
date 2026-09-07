@@ -148,7 +148,7 @@ const Contact = () => {
                   {...(card.href ? { href: card.href } : {})}
                   className={`flex items-center gap-4 retro-card bg-surface group transition-colors !p-4 ${
                     card.href
-                      ? 'hover:bg-pastel-cream focus-ring'
+                      ? 'hover:bg-pastel-cream dark:hover:bg-surface-light focus-ring'
                       : ''
                   }`}
                 >
@@ -156,8 +156,8 @@ const Contact = () => {
                     {card.icon}
                   </div>
                   <div>
-                    <p className="text-sm font-retro tracking-widest uppercase text-text-secondary group-hover:text-[rgb(60,72,85)]">{card.label}</p>
-                    <p className="text-text-primary font-bold text-lg group-hover:text-[rgb(34,48,65)] font-retro tracking-wide">
+                    <p className="text-sm font-retro tracking-widest uppercase text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)]">{card.label}</p>
+                    <p className="text-text-primary font-bold text-lg group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)] font-retro tracking-wide">
                       {card.value}
                     </p>
                   </div>

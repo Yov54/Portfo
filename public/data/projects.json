@@ -68,13 +68,14 @@
     "tech": ["ESP32", "LoRa SX1278", "GPS NEO-6M", "Arduino IDE", "MQTT", "PHP", "JavaScript", "Bootstrap", "MySQL"],
     "solidColor": "--color-accent-light",
     "github": "#",
-    "demo": "#",
+    "demo": "https://yov54.github.io/LoRa-Scooter-Monitoring/",
     "icon": "bx bx-broadcast",
     "status": "Thesis Project",
     "details": {
       "heroTitle": "IoT-Based Electric Scooter Monitoring System",
       "heroTagline": "An IoT-based monitoring system that enhances rental electric scooter safety through real-time tracking, emergency alerts, and long-range wireless communication.",
-      "overview": "This project was developed as my undergraduate thesis to improve the safety of rental electric scooter users. The system combines custom embedded hardware, LoRa communication, GPS tracking, and a web-based monitoring dashboard to provide real-time location monitoring and emergency notifications over long distances.",
+      "heroWebsite": "https://yov54.github.io/LoRa-Scooter-Monitoring/",
+      "overview": "This project was developed as my undergraduate thesis to improve the safety of rental electric scooter users. The system combines custom embedded hardware, LoRa communication, GPS tracking, and a web-based monitoring dashboard to provide real-time location monitoring and emergency notifications over long distances. The dashboard centralizes live scooter locations, rider status, emergency alerts, device connection status, and scooter information for operators.",
       "myRole": {
         "embeddedSystemDevelopment": [
           "Designed and developed both transmitter and receiver devices.",
@@ -93,6 +94,7 @@
         ]
       },
       "architecture": "GPS Module\n      │\n      ▼\nESP32 Transmitter\n      │\n      ▼\nLoRa Communication\n      │\n      ▼\nESP32 Receiver\n      │\n      ▼\nMQTT Broker\n      │\n      ▼\nDatabase\n      │\n      ▼\nWeb Monitoring Dashboard",
+      "architectureImage": "images/projects/scooter/System Architecture.png",
       "architectureDescription": "The transmitter collects GPS and safety information from the scooter and sends it to the receiver through LoRa. The receiver forwards the data via MQTT, allowing operators to monitor scooters through a web dashboard in near real time.",
       "features": [
         "Real-Time GPS Tracking: Monitor scooter locations in real time through a web dashboard.",
@@ -115,7 +117,6 @@
           "Connects the embedded system with the web dashboard"
         ]
       },
-      "webDashboard": "The dashboard provides operators with a centralized monitoring interface that includes live scooter locations, rider status, emergency alerts, device connection status, and scooter information.",
       "technologies": ["ESP32", "LoRa SX1278", "GPS NEO-6M", "Arduino IDE", "MQTT", "PHP", "JavaScript", "Bootstrap", "MySQL", "HTML", "CSS", "Leaflet.js", "XAMPP"],
       "challenges": [
         {
@@ -137,15 +138,6 @@
         "Established reliable LoRa-based communication between devices.",
         "Implemented GPS-based location tracking and emergency alert flow.",
         "Connected the embedded system to a live monitoring interface for operators."
-      ],
-      "gallery": [
-        { "title": "Prototype Transmitter", "image": "images/projects/scooter/prototype_transmitter.jpg" },
-        { "title": "Prototype Receiver", "image": "images/projects/scooter/prototype_receiver.jpg" },
-        { "title": "PCB Transmitter", "image": "images/projects/scooter/pcb_transmitter.jpg" },
-        { "title": "PCB Receiver", "image": "images/projects/scooter/pcb_receiver.jpg" },
-        { "title": "Dashboard Screenshot", "image": "images/projects/scooter/dashboard.jpg" },
-        { "title": "Hardware Assembly", "image": "images/projects/scooter/hardware_assembly.jpg" },
-        { "title": "Field Testing", "image": "images/projects/scooter/field_testing.jpg" }
       ],
       "codeSnippets": {
         "transmitter": {

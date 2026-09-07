@@ -88,14 +88,14 @@ const Experience = () => {
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                     >
-                      <div className="retro-card bg-surface hover:bg-pastel-cream group">
+                      <div className="retro-card bg-surface hover:bg-pastel-cream dark:hover:bg-surface-light group">
                         {/* Card Header */}
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 pb-4 border-b-2 border-border/10 group-hover:border-[rgb(34,48,65)]/10">
                           <div className="w-12 h-12 retro-border bg-surface-light flex items-center justify-center text-text-primary text-2xl shrink-0 group-hover:bg-[rgb(255,255,255)] group-hover:text-[rgb(34,48,65)] transition-colors duration-300">
                             <i className={exp.icon}></i>
                           </div>
                           <div>
-                            <h3 className="text-2xl font-retro font-bold text-text-primary group-hover:text-[rgb(34,48,65)] tracking-wide">
+                            <h3 className="text-2xl font-retro font-bold text-text-primary group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)] tracking-wide">
                               {exp.role}
                             </h3>
                             <p className="text-pastel-pink dark:text-accent font-retro text-lg tracking-widest uppercase group-hover:text-[rgb(180,80,100)]">{exp.company}</p>
@@ -103,7 +103,7 @@ const Experience = () => {
                         </div>
 
                         {/* Date */}
-                        <p className="text-sm font-retro tracking-widest uppercase text-text-secondary group-hover:text-[rgb(60,72,85)] mb-4 flex items-center gap-2">
+                        <p className="text-sm font-retro tracking-widest uppercase text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mb-4 flex items-center gap-2">
                           <i className="bx bx-time"></i>
                           {exp.date}
                         </p>
@@ -113,7 +113,7 @@ const Experience = () => {
                           {exp.description.map((bullet, i) => (
                             <li
                               key={i}
-                              className="text-text-secondary group-hover:text-[rgb(60,72,85)] text-sm leading-relaxed flex items-start gap-3"
+                              className="text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] text-sm leading-relaxed flex items-start gap-3"
                             >
                               <span className="text-pastel-blue text-xs mt-1">▶</span>
                               <span>{bullet}</span>

@@ -63,7 +63,7 @@ const Education = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <motion.div 
-            className="retro-card bg-surface hover:bg-pastel-cream group transition-colors"
+            className="retro-card bg-surface hover:bg-pastel-cream dark:hover:bg-surface-light group transition-colors"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -77,17 +77,17 @@ const Education = () => {
               {educationItems.map((item) => (
                 <div key={item.title} className="border-l-4 border-dotted border-pastel-lavender pl-4">
                   <p className="text-pastel-pink dark:text-accent font-retro text-xl tracking-wide uppercase">{item.title}</p>
-                  <p className="text-text-primary font-bold mt-1 group-hover:text-black">{item.institution}</p>
-                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-gray-800 mt-1 uppercase">{item.period}</p>
-                  <p className="text-sm text-text-secondary group-hover:text-gray-800 mt-2 leading-relaxed">{item.detail}</p>
-                  <p className="text-sm text-text-secondary group-hover:text-gray-800 mt-2 leading-relaxed italic">{item.extra}</p>
+                  <p className="text-text-primary font-bold mt-1 group-hover:text-black dark:group-hover:text-[rgb(255,253,222)]">{item.institution}</p>
+                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-1 uppercase">{item.period}</p>
+                  <p className="text-sm text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed">{item.detail}</p>
+                  <p className="text-sm text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed italic">{item.extra}</p>
                 </div>
               ))}
             </div>
           </motion.div>
 
           <motion.div 
-            className="retro-card bg-surface hover:bg-pastel-cream group transition-colors"
+            className="retro-card bg-surface hover:bg-pastel-cream dark:hover:bg-surface-light group transition-colors"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -101,9 +101,9 @@ const Education = () => {
               {developmentItems.map((item) => (
                 <div key={item.title} className="border-l-4 border-dotted border-pastel-sage pl-4">
                   <p className="text-pastel-lime dark:text-accent font-retro text-xl tracking-wide uppercase">{item.title}</p>
-                  <p className="text-text-primary font-bold mt-1 group-hover:text-black">{item.type}</p>
-                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-gray-800 mt-1 uppercase">{item.period}</p>
-                  <p className="text-sm text-text-secondary group-hover:text-gray-800 mt-2 leading-relaxed">{item.detail}</p>
+                  <p className="text-text-primary font-bold mt-1 group-hover:text-black dark:group-hover:text-[rgb(255,253,222)]">{item.type}</p>
+                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-1 uppercase">{item.period}</p>
+                  <p className="text-sm text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed">{item.detail}</p>
                 </div>
               ))}
             </div>
