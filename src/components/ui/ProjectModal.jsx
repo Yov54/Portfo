@@ -339,6 +339,11 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                     heightClass="h-64 sm:h-[400px]" 
                   />
                 )}
+                {details.videoNote && details.heroVideo && (
+                  <p className="mt-3 text-center text-sm italic text-text-secondary">
+                    {details.videoNote}
+                  </p>
+                )}
               </div>
             )}
           </div>

@@ -22,6 +22,8 @@ const Experience = () => {
   return (
     <section id="experience" className="py-20 px-4 lg:px-20 relative">
       <div className="absolute top-0 left-0 right-0 section-retro-line"></div>
+      <div className="pointer-events-none absolute right-8 top-28 text-pastel-pink text-4xl animate-pixel-bounce" aria-hidden="true">★</div>
+      <div className="pointer-events-none absolute left-6 bottom-20 text-pastel-blue text-5xl animate-pixel-bounce" style={{ animationDelay: '0.5s' }} aria-hidden="true">★</div>
       
       <div className="max-w-6xl mx-auto pt-10">
         {/* Section Badge */}
@@ -32,9 +34,9 @@ const Experience = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-blue text-black retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-blue text-[rgb(34,48,65)] retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
             <i className="bx bx-briefcase" aria-hidden="true"></i>
-            <span>SAVE FILES</span>
+            <span>CAREER PATH</span>
           </div>
         </motion.div>
 
@@ -53,7 +55,7 @@ const Experience = () => {
         <div className="relative">
           {/* Vertical Timeline Line */}
           <div
-            className="absolute left-4 lg:left-1/2 lg:-translate-x-1/2 top-0 bottom-0 w-[4px] border-l-4 border-dotted border-border opacity-50"
+            className="absolute left-4 lg:left-1/2 lg:-translate-x-1/2 top-0 bottom-0 w-[4px] border-l-4 border-dotted border-[rgb(34,48,65)] opacity-100 dark:border-[rgb(188,216,236)] dark:opacity-70"
           />
 
           {/* Experience Entries */}
@@ -103,19 +105,19 @@ const Experience = () => {
                         </div>
 
                         {/* Date */}
-                        <p className="text-sm font-retro tracking-widest uppercase text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mb-4 flex items-center gap-2">
+                        <p className="text-sm font-retro tracking-widest uppercase text-[rgb(60,72,85)] dark:text-[rgb(188,216,236)] group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)] mb-5 flex items-center gap-2">
                           <i className="bx bx-time"></i>
                           {exp.date}
                         </p>
 
                         {/* Description Bullets */}
-                        <ul className="space-y-3">
+                        <ul className="space-y-4">
                           {exp.description.map((bullet, i) => (
                             <li
                               key={i}
-                              className="text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] text-sm leading-relaxed flex items-start gap-3"
+                              className="text-[rgb(60,72,85)] dark:text-[rgb(188,216,236)] group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)] text-[15px] sm:text-base leading-7 flex items-start gap-3"
                             >
-                              <span className="text-pastel-blue text-xs mt-1">▶</span>
+                              <span className="text-[rgb(120,170,205)] dark:text-[rgb(188,216,236)] text-xs mt-2 shrink-0">▶</span>
                               <span>{bullet}</span>
                             </li>
                           ))}

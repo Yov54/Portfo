@@ -19,10 +19,13 @@ const cardVariants = {
 const categories = [
   'All',
   'Frontend',
-  'Backend',
+  // 'Backend',
   'ML',
   'Robotics',
+  'Game',
 ];
+
+const hiddenProjectTitles = new Set(['Mini Trading API', 'Portfolio Website']);
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -53,7 +56,7 @@ const Projects = () => {
     fetch(`${import.meta.env.BASE_URL}data/projects.json`)
       .then((res) => res.json())
       .then((data) => {
-        setProjects(data);
+        setProjects(data.filter((project) => !hiddenProjectTitles.has(project.title)));
         setLoading(false);
       })
       .catch((err) => {
@@ -80,6 +83,8 @@ const Projects = () => {
   return (
     <section id="projects" className="py-20 px-4 lg:px-20 relative">
       <div className="absolute top-0 left-0 right-0 section-retro-line"></div>
+      <div className="pointer-events-none absolute right-8 top-28 text-pastel-blue text-5xl animate-pixel-bounce" aria-hidden="true">★</div>
+      <div className="pointer-events-none absolute left-6 bottom-20 text-pastel-pink text-4xl animate-pixel-bounce" style={{ animationDelay: '0.5s' }} aria-hidden="true">★</div>
       
       {/* Section Header */}
       <motion.div 
@@ -90,9 +95,9 @@ const Projects = () => {
         className="text-center mb-16 pt-10"
       >
         {/* Badge Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-lime text-black retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-lime text-[rgb(34,48,65)] retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
           <i className="bx bx-briefcase" aria-hidden="true"></i>
-          <span>LEVEL SELECT</span>
+          <span>SHOWCASE</span>
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-retro font-bold tracking-widest text-text-primary">

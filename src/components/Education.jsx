@@ -36,6 +36,8 @@ const Education = () => {
   return (
     <section id="education" className="py-20 px-4 lg:px-20 relative">
       <div className="absolute top-0 left-0 right-0 section-retro-line"></div>
+      <div className="pointer-events-none absolute left-6 top-28 text-pastel-lime text-4xl animate-pixel-bounce" aria-hidden="true">★</div>
+      <div className="pointer-events-none absolute right-8 bottom-16 text-pastel-pink text-5xl animate-pixel-bounce" style={{ animationDelay: '0.5s' }} aria-hidden="true">★</div>
       
       <div className="max-w-6xl mx-auto pt-10">
         <motion.div 
@@ -45,9 +47,9 @@ const Education = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-yellow text-black retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-yellow text-[rgb(34,48,65)] retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
             <i className="bx bx-book-open" aria-hidden="true"></i>
-            <span>TUTORIAL LEVEL</span>
+            <span>FOUNDATION</span>
           </div>
         </motion.div>
 
@@ -76,11 +78,11 @@ const Education = () => {
             <div className="space-y-6">
               {educationItems.map((item) => (
                 <div key={item.title} className="border-l-4 border-dotted border-pastel-lavender pl-4">
-                  <p className="text-pastel-pink dark:text-accent font-retro text-xl tracking-wide uppercase">{item.title}</p>
-                  <p className="text-text-primary font-bold mt-1 group-hover:text-black dark:group-hover:text-[rgb(255,253,222)]">{item.institution}</p>
-                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-1 uppercase">{item.period}</p>
-                  <p className="text-sm text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed">{item.detail}</p>
-                  <p className="text-sm text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed italic">{item.extra}</p>
+                  <p className="text-[rgb(180,80,100)] dark:text-accent group-hover:text-[rgb(130,50,70)] dark:group-hover:text-[rgb(255,253,222)] font-retro text-xl tracking-wide uppercase">{item.title}</p>
+                  <p className="text-text-primary font-bold mt-1 group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)]">{item.institution}</p>
+                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mt-1 uppercase">{item.period}</p>
+                  <p className="text-sm text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed">{item.detail}</p>
+                  <p className="text-sm text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed italic">{item.extra}</p>
                 </div>
               ))}
             </div>
@@ -100,10 +102,10 @@ const Education = () => {
             <div className="space-y-6">
               {developmentItems.map((item) => (
                 <div key={item.title} className="border-l-4 border-dotted border-pastel-sage pl-4">
-                  <p className="text-pastel-lime dark:text-accent font-retro text-xl tracking-wide uppercase">{item.title}</p>
-                  <p className="text-text-primary font-bold mt-1 group-hover:text-black dark:group-hover:text-[rgb(255,253,222)]">{item.type}</p>
-                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-1 uppercase">{item.period}</p>
-                  <p className="text-sm text-text-secondary group-hover:text-gray-800 dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed">{item.detail}</p>
+                  <p className="text-[rgb(83,110,45)] dark:text-accent group-hover:text-[rgb(55,80,25)] dark:group-hover:text-[rgb(255,253,222)] font-retro text-xl tracking-wide uppercase">{item.title}</p>
+                  <p className="text-text-primary font-bold mt-1 group-hover:text-[rgb(34,48,65)] dark:group-hover:text-[rgb(255,253,222)]">{item.type}</p>
+                  <p className="text-sm font-retro tracking-widest text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mt-1 uppercase">{item.period}</p>
+                  <p className="text-sm text-text-secondary group-hover:text-[rgb(60,72,85)] dark:group-hover:text-[rgb(188,216,236)] mt-2 leading-relaxed">{item.detail}</p>
                 </div>
               ))}
             </div>

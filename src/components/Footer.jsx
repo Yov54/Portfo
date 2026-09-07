@@ -111,7 +111,7 @@ const Footer = () => {
 
         {/* Bottom Row: Copyright */}
         <p className="text-center text-sm font-retro tracking-widest uppercase text-text-secondary">
-          &copy; 2026 Yovi Revikasari. All rights reserved. GAME OVER.
+          &copy; 2026 Yovi Revikasari. All rights reserved.
         </p>
       </footer>
 

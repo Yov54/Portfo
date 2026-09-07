@@ -16,15 +16,6 @@ const Hero = () => {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="max-w-xl z-10 mt-8 lg:mt-0"
       >
-
-        
-        {/* Tag box */}
-        <div className='inline-flex items-center gap-2 px-3 py-1 bg-pastel-yellow text-black retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6'>
-          <i className='bx bx-game' aria-hidden="true"></i>
-          <span className="sr-only">Section:</span>
-          <span>Player 1</span>
-        </div>
-
         {/* Main Heading */}
         <motion.h1 
           className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-retro font-bold tracking-widest my-4 leading-tight text-text-primary'
@@ -45,7 +36,7 @@ const Hero = () => {
 
         {/* Description */}
         <p className='text-base sm:text-lg tracking-wider text-text-secondary max-w-[25rem] lg:max-w-[30rem] leading-relaxed animate-fade-in mt-6 bg-surface p-4 retro-border shadow-[4px_4px_0px_0px_rgba(var(--color-shadow))]'>
-          I&apos;m a software developer and machine learning enthusiast with experience in web development, IoT, and technology education. I enjoy building practical solutions that create real impact.
+          I&apos;m an Electrical Engineering graduate and software developer with experience in web development, machine learning, IoT, embedded systems, and technology education. I enjoy building practical technology while sharing knowledge and continuously exploring new ways to learn and create.
         </p>
 
         {/* Buttons */}
@@ -53,7 +44,7 @@ const Hero = () => {
           <motion.a 
             whileHover={{ scale: 1.05, y: -4, boxShadow: "6px 6px 0px 0px rgba(0,0,0,0.8)" }}
             whileTap={{ scale: 0.95, boxShadow: "1px 1px 0px 0px rgba(0,0,0,0.8)" }}
-            className='btn-retro bg-pastel-lime flex items-center gap-2'
+            className='btn-retro bg-pastel-lime dark:bg-accent dark:text-[rgb(34,48,65)] flex items-center gap-2'
             href="#projects"
           >
             <i className='bx bx-play-circle text-2xl' aria-hidden="true"></i>
@@ -62,7 +53,7 @@ const Hero = () => {
           <motion.a 
             whileHover={{ scale: 1.05, y: -4, boxShadow: "6px 6px 0px 0px rgba(0,0,0,0.8)" }}
             whileTap={{ scale: 0.95, boxShadow: "1px 1px 0px 0px rgba(0,0,0,0.8)" }}
-            className='btn-retro bg-surface text-text-primary flex items-center gap-2'
+            className='btn-retro bg-surface text-text-primary dark:bg-accent dark:text-[rgb(34,48,65)] flex items-center gap-2'
             href="#contact"
           >
             <i className='bx bx-envelope text-2xl' aria-hidden="true"></i>

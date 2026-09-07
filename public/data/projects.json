@@ -33,10 +33,26 @@
       "architecture": "User Input → Flask API → TensorFlow Model → Recommendation Engine → Result Display",
       "architectureDescription": "The frontend sends user symptoms to the Flask backend, where the model evaluates plant matches and returns ranked herbal suggestions to the UI.",
       "features": [
-        "Symptom-based medicinal plant recommendation using NLP",
-        "Medicinal plant detail pages with benefits and usage notes",
-        "Interactive search and filter for plant categories",
-        "Responsive healthcare-focused interface for mobile and desktop"
+        {
+          "title": "Symptom Recommendation",
+          "description": "Suggests medicinal plants based on user symptoms using an NLP-powered recommendation model.",
+          "icon": "bx bx-capsule"
+        },
+        {
+          "title": "Plant Information",
+          "description": "Provides dedicated plant detail pages with benefits, properties, and usage notes.",
+          "icon": "bx bx-leaf"
+        },
+        {
+          "title": "Smart Search",
+          "description": "Helps users discover relevant plants through interactive search and category filters.",
+          "icon": "bx bx-search-alt-2"
+        },
+        {
+          "title": "Healthcare Interface",
+          "description": "Delivers a responsive and approachable experience across desktop, tablet, and mobile devices.",
+          "icon": "bx bx-heart"
+        }
       ],
       "technologies": ["Python", "TensorFlow", "NLP", "Flask", "NumPy", "HTML", "CSS", "JavaScript"],
       "challenges": [
@@ -97,11 +113,31 @@
       "architectureImage": "images/projects/scooter/System Architecture.png",
       "architectureDescription": "The transmitter collects GPS and safety information from the scooter and sends it to the receiver through LoRa. The receiver forwards the data via MQTT, allowing operators to monitor scooters through a web dashboard in near real time.",
       "features": [
-        "Real-Time GPS Tracking: Monitor scooter locations in real time through a web dashboard.",
-        "Long-Range LoRa Communication: Transmit monitoring data over long distances using LoRa technology.",
-        "Emergency Alert System: Send emergency notifications when the rider activates the emergency button.",
-        "Custom Embedded Hardware: Built using custom-designed transmitter and receiver PCBs.",
-        "Monitoring Dashboard: Visualize location data and device status through a web interface."
+        {
+          "title": "Real-Time GPS Tracking",
+          "description": "Monitor scooter locations in real time through a web dashboard.",
+          "icon": "bx bx-map-pin"
+        },
+        {
+          "title": "Long-Range Communication",
+          "description": "Transmit monitoring data over long distances using LoRa technology.",
+          "icon": "bx bx-broadcast"
+        },
+        {
+          "title": "Emergency Alert System",
+          "description": "Send emergency notifications when the rider activates the emergency button.",
+          "icon": "bx bx-error-alt"
+        },
+        {
+          "title": "Embedded Hardware",
+          "description": "Connect custom-designed transmitter and receiver PCBs into a complete monitoring system.",
+          "icon": "bx bx-chip"
+        },
+        {
+          "title": "Monitoring Dashboard",
+          "description": "Visualize location data and device status through a clear web interface.",
+          "icon": "bx bx-desktop"
+        }
       ],
       "hardwareDesign": {
         "transmitter": [
@@ -143,19 +179,19 @@
         "transmitter": {
           "title": "ESP32 Transmitter (C++)",
           "language": "cpp",
-          "description": "Firmware untuk ESP32 Transmitter pada skuter yang membaca data GPS, memonitor tombol SOS, dan mengirim paket telemetri ke LoRa SX1278.",
+          "description": "ESP32 Transmitter Firmware for the scooter-mounted ESP32 transmitter to read GPS data, monitor the SOS button, and transmit telemetry packets through the SX1278 LoRa module.",
           "code": "#include <SPI.h>\n#include <LoRa.h>\n#include <TinyGPS++.h>\n#include <HardwareSerial.h>\n\n// Pinout konfigurasi LoRa SX1278\n#define SS      18\n#define RST     14\n#define DIO0    26\n#define BAND    915E6 // Frekuensi LoRa (disesuaikan dengan wilayah)\n\nTinyGPSPlus gps;\nHardwareSerial gpsSerial(2); // GPS terhubung pada UART2\n\nconst float SPEED_LIMIT = 25.0; // Limit kecepatan dalam km/jam\nconst int SOS_BUTTON_PIN = 4;\nvolatile bool sosPressed = false;\n\n// Hardware ISR (Interrupt Service Routine) untuk tombol darurat SOS\nvoid IRAM_ATTR handleSOS() {\n  sosPressed = true;\n}\n\nvoid setup() {\n  Serial.begin(115200);\n  gpsSerial.begin(9600, SERIAL_8N1, 16, 17); // Rx=PIN 16, Tx=PIN 17\n  \n  pinMode(SOS_BUTTON_PIN, INPUT_PULLUP);\n  attachInterrupt(digitalPinToInterrupt(SOS_BUTTON_PIN), handleSOS, FALLING);\n  \n  LoRa.setPins(SS, RST, DIO0);\n  if (!LoRa.begin(BAND)) {\n    Serial.println(\"Memulai LoRa gagal!\");\n    while (1);\n  }\n  Serial.println(\"ESP32 LoRa Transmitter berhasil diinisialisasi.\");\n}\n\nvoid loop() {\n  // Membaca stream data NMEA dari modul GPS\n  while (gpsSerial.available() > 0) {\n    gps.encode(gpsSerial.read());\n  }\n\n  // Kirim data jika modul GPS memperbarui lokasi\n  if (gps.location.isUpdated()) {\n    float latitude = gps.location.lat();\n    float longitude = gps.location.lng();\n    float speed = gps.speed.kmh();\n    \n    // Validasi batas kecepatan\n    bool overspeed = (speed > SPEED_LIMIT);\n    \n    // Enkapsulasi data menjadi format paket CSV: \"LAT,LNG,SPEED,OVERSPEED,SOS\"\n    String packet = String(latitude, 6) + \",\" +\n                   String(longitude, 6) + \",\" +\n                   String(speed, 2) + \",\" +\n                   (overspeed ? \"1\" : \"0\") + \",\" +\n                   (sosPressed ? \"1\" : \"0\");\n                   \n    // Mengirimkan paket melalui sinyal RF LoRa\n    LoRa.beginPacket();\n    LoRa.print(packet);\n    LoRa.endPacket();\n    \n    Serial.println(\"Paket Terkirim: \" + packet);\n    \n    // Reset status interupsi SOS setelah berhasil terkirim\n    if (sosPressed) {\n      sosPressed = false;\n    }\n  }\n  delay(1000); // Sampling data berkala setiap 1 detik\n"
         },
         "receiver": {
           "title": "ESP32 Receiver (C++)",
           "language": "cpp",
-          "description": "Firmware ESP32 Receiver sebagai gateway yang menerima paket LoRa dan meneruskannya ke MQTT Broker melalui jaringan Wi-Fi.",
+          "description": "ESP32 Receiver Firmware for the ESP32 receiver to act as a gateway, receiving LoRa packets and forwarding telemetry data to an MQTT broker over a Wi-Fi network.",
           "code": "#include <SPI.h>\n#include <LoRa.h>\n#include <WiFi.h>\n#include <PubSubClient.h>\n\n// Pinout konfigurasi LoRa SX1278\n#define SS      18\n#define RST     14\n#define DIO0    26\n#define BAND    915E6\n\nconst char* ssid = \"WIFI_AP_SSID\";\nconst char* password = \"WIFI_PASSWORD\";\nconst char* mqtt_server = \"broker.hivemq.com\";\nconst char* mqtt_topic = \"scooter/monitoring/data\";\n\nWiFiClient espClient;\nPubSubClient client(espClient);\n\nvoid setup() {\n  Serial.begin(115200);\n  setup_wifi();\n  \n  client.setServer(mqtt_server, 1883);\n  \n  LoRa.setPins(SS, RST, DIO0);\n  if (!LoRa.begin(BAND)) {\n    Serial.println(\"Memulai LoRa gagal!\");\n    while (1);\n  }\n  Serial.println(\"ESP32 LoRa Receiver (Gateway) Terinisialisasi.\");\n}\n\nvoid setup_wifi() {\n  delay(10);\n  Serial.print(\"Menghubungkan ke \" );\n  Serial.println(ssid);\n  WiFi.begin(ssid, password);\n  while (WiFi.status() != WL_CONNECTED) {\n    delay(500);\n    Serial.print(\".\");\n  }\n  Serial.println(\"\nWi-Fi terhubung.\");\n}\n\nvoid reconnect() {\n  while (!client.connected()) {\n    Serial.print(\"Mencoba koneksi MQTT...\");\n    if (client.connect(\"ESP32_Scooter_Receiver_Gateway\")) {\n      Serial.println(\"terhubung ke broker MQTT\");\n    } else {\n      Serial.print(\"gagal, status=\");\n      Serial.print(client.state());\n      Serial.println(\" mencoba kembali dalam 5 detik...\");\n      delay(5000);\n    }\n  }\n}\n\nvoid loop() {\n  if (!client.connected()) {\n    reconnect();\n  }\n  client.loop();\n\n  // Parsing jika ada paket LoRa RF yang masuk\n  int packetSize = LoRa.parsePacket();\n  if (packetSize) {\n    String payload = \"\";\n    while (LoRa.available()) {\n      payload += (char)LoRa.read();\n    }\n    Serial.println(\"Menerima paket LoRa: \" + payload);\n    \n    // Publikasikan payload ke MQTT Broker secara langsung\n    if (client.publish(mqtt_topic, payload.c_str())) {\n      Serial.println(\"Data berhasil diteruskan ke MQTT topic\");\n    } else {\n      Serial.println(\"Gagal mempublikasikan data ke MQTT\");\n    }\n  }\n}"
         },
         "dashboard": {
           "title": "Web Dashboard (JS - MQTT)",
           "language": "javascript",
-          "description": "Kode klien dashboard web yang menghubungkan ke MQTT broker melalui WebSocket, menerima update lokasi real-time, dan memindahkan marker Leaflet.js.",
+          "description": "Web Dashboard Client that connects to the MQTT broker via WebSocket, receives real-time location updates, and dynamically updates the vehicle marker using Leaflet.js.",
           "code": "import mqtt from 'mqtt';\nimport L from 'leaflet';\n\n// Inisialisasi peta Leaflet berpusat di Universitas Udayana, Bali\nconst map = L.map('map-container').setView([-8.673, 115.216], 15);\nL.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n  attribution: '© OpenStreetMap contributors'\n}).addTo(map);\n\n// Kustomisasi marker skuter listrik\nconst scooterIcon = L.icon({\n  iconUrl: '/images/scooter-icon.png',\n  iconSize: [40, 40],\n  iconAnchor: [20, 40]\n});\n\nlet scooterMarker = L.marker([-8.673, 115.216], { icon: scooterIcon }).addTo(map);\nscooterMarker.bindPopup('<b>Skuter #01</b><br>Menghubungkan ke GPS...').openPopup();\n\n// Menghubungkan ke HiveMQ MQTT Broker via WebSockets port 8000\nconst client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt');\n\nclient.on('connect', () => {\n  console.log('Koneksi broker MQTT via WebSocket berhasil!');\n  client.subscribe('scooter/monitoring/data');\n});\n\nclient.on('message', (topic, message) => {\n  const payload = message.toString(); // Format string payload: \"lat,lng,speed,overspeed,sos\"\n  const [latStr, lngStr, speedStr, overspeedStr, sosStr] = payload.split(',');\n  \n  const lat = parseFloat(latStr);\n  const lng = parseFloat(lngStr);\n  const speed = parseFloat(speedStr);\n  const isOverspeed = overspeedStr === '1';\n  const isSos = sosStr === '1';\n\n  // Memindahkan penanda skuter ke koordinat baru secara dinamis\n  const newLatLng = new L.LatLng(lat, lng);\n  scooterMarker.setLatLng(newLatLng);\n  map.panTo(newLatLng);\n\n  // Kustomisasi teks popup sesuai status telemetri terkini\n  let popupContent = `\n    <div class='scooter-popup text-slate-800'>\n      <h4 class='font-bold text-sm'>Skuter Rental #01</h4>\n      <p class='text-xs mt-1'>Kecepatan: \n        <span class='font-semibold ${isOverspeed ? 'text-red-600 font-bold' : 'text-slate-600'}'>\n          ${speed} km/jam\n        </span>\n      </p>\n      <p class='text-xs'>Status: \n        ${isSos ? '<span class='text-red-500 font-bold animate-pulse'>⚠️ SOS AKTIF</span>' : '<span class='text-green-600'>Normal</span>'}\n      </p>\n    </div>\n  `;\n  scooterMarker.getPopup().setContent(popupContent);\n\n  // Memicu notifikasi sistem jika tombol SOS ditekan pengendara\n  if (isSos) {\n    triggerAlertBanner(lat, lng);\n  }\n});\n\nfunction triggerAlertBanner(lat, lng) {\n  const notificationArea = document.getElementById('alert-toast-container');\n  notificationArea.innerHTML = `\n    <div class='bg-red-500/20 border border-red-500 text-red-200 p-4 rounded-xl flex justify-between items-center animate-pulse'>\n      <div class='flex items-center gap-2'>\n        <span class='text-xl'>🚨</span>\n        <div>\n          <h5 class='font-bold text-sm'>ALARM SOS AKTIF!</h5>\n          <p class='text-xs'>Pengendara membutuhkan bantuan di koordinat: ${lat}, ${lng}</p>\n        </div>\n      </div>\n      <button class='bg-red-600 text-white text-xs px-3 py-1 rounded' onclick='this.parentElement.remove()'>Tutup</button>\n    </div>\n  `;\n}"
         }
       }
@@ -266,10 +302,26 @@
       "architecture": "Form Input → Client Rendering → Resume Preview → Editable Resume Sections",
       "architectureDescription": "The application renders resume content through structured form inputs and a live preview, making it easier for users to edit information and review changes in a consistent workflow.",
       "features": [
-        "Resume Editor: Create and update resume information through structured forms.",
-        "Responsive Design: Access and edit resumes across desktop, tablet, and mobile devices.",
-        "Organized Sections: Manage education, experience, skills, and other resume content with a clear structure.",
-        "Simple Navigation: Navigate easily between different resume sections during editing."
+        {
+          "title": "Resume Editor",
+          "description": "Create and update resume information through structured forms.",
+          "icon": "bx bx-edit"
+        },
+        {
+          "title": "Responsive Design",
+          "description": "Access and edit resumes across desktop, tablet, and mobile devices.",
+          "icon": "bx bx-devices"
+        },
+        {
+          "title": "Organized Sections",
+          "description": "Manage education, experience, skills, and other resume content with a clear structure.",
+          "icon": "bx bx-list-check"
+        },
+        {
+          "title": "Simple Navigation",
+          "description": "Navigate easily between different resume sections during editing.",
+          "icon": "bx bx-navigation"
+        }
       ],
       "technologies": ["Laravel", "Bootstrap", "JavaScript", "MySQL", "HTML", "CSS"],
       "challenges": [
@@ -305,40 +357,41 @@
     "tags": ["Business Website", "Product Catalog", "Frontend Development"],
     "details": {
       "heroTitle": "D’Best Grass",
-      "heroTagline": "A responsive business website that showcases products through a clean and organized catalog experience.",
-      "heroImage": "#",
-      "overview": "D'Best Grass is a responsive business website developed to showcase artificial grass products through a structured product catalog. The website focuses on presenting product information clearly, making it easier for customers to browse products while supporting the company's online presence.",
+      "heroTagline": "A responsive business website developed to showcase artificial grass products through a structured product catalog, with a focus on clear product presentation and straightforward navigation.",
+      "heroVideo": "video/dbestgrass.mp4",
+      "videoNote": "Video walkthrough of the website interface. Source code and live website are not publicly available due to client confidentiality.",
+      "overview": "D’Best Grass is a responsive business website developed to showcase artificial grass products through a structured product catalog. The website presents product information in a clear and organized way, helping visitors browse available products and learn more about each product through dedicated detail pages.",
       "myRole": {
         "frontendDevelopment": [
           "Developed responsive product catalog and product detail pages using Laravel and Bootstrap.",
-          "Built reusable UI components for consistent layouts across the website.",
-          "Implemented interactive elements using JavaScript to improve navigation and usability."
+          "Built reusable UI components to maintain consistent layouts across the website.",
+          "Implemented interactive elements using JavaScript for navigation and user interactions."
         ],
         "productCatalogManagement": [
-          "Structured product information into clear and organized catalog pages.",
-          "Designed intuitive navigation to help users browse products more efficiently.",
-          "Optimized layouts for desktop, tablet, and mobile devices."
+          "Structured product information into organized catalog and detail pages.",
+          "Implemented navigation between product categories and individual product information.",
+          "Adapted layouts for desktop, tablet, and mobile screen sizes."
         ],
         "userExperience": [
-          "Focused on clear visual hierarchy and readable content layouts.",
-          "Improved browsing experience through consistent spacing and navigation.",
-          "Maintained a clean interface aligned with the company's branding."
+          "Applied clear visual hierarchy to product and content sections.",
+          "Maintained consistent spacing, typography, and navigation patterns throughout the website.",
+          "Followed the company's existing visual identity when implementing the interface."
         ]
       },
       "features": [
         {
           "title": "Product Catalog",
-          "description": "Browse products through organized catalog pages.",
+          "description": "Organized product listings that allow visitors to browse available artificial grass products.",
           "icon": "bx bx-store-alt"
         },
         {
-          "title": "Responsive Design",
+          "title": "Responsive Interface",
           "description": "Optimized layouts for desktop, tablet, and mobile devices.",
           "icon": "bx bx-devices"
         },
         {
           "title": "Simple Navigation",
-          "description": "Clear navigation and product organization for easier browsing.",
+          "description": "Straightforward navigation between product categories, listings, and product details.",
           "icon": "bx bx-navigation"
         },
         {
@@ -351,15 +404,15 @@
       "challenges": [
         {
           "title": "Organizing Product Information",
-          "description": "Designed a clear content hierarchy so customers could easily browse and compare products without feeling overwhelmed."
+          "description": "Structured product content into clear catalog and detail pages so visitors could find relevant product information more easily."
         },
         {
           "title": "Responsive Layout",
-          "description": "Adjusted layouts and spacing to ensure a consistent browsing experience across different screen sizes."
+          "description": "Adapted components, spacing, and content layouts to maintain a consistent experience across different screen sizes."
         },
         {
           "title": "Consistent User Interface",
-          "description": "Built reusable interface components to maintain a cohesive design throughout the website."
+          "description": "Created reusable interface patterns and components to maintain visual consistency across different pages."
         }
       ]
     }

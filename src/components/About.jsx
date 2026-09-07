@@ -18,7 +18,7 @@ const skillDomains = [
   { label: 'Frontend', icon: <FiMonitor className="text-xl" /> },
   { label: 'Machine Learning', icon: <FiCpu className="text-xl" /> },
   { label: 'Robotics', icon: <PiRobotFill className="text-xl" /> },
-  { label: 'Game Dev', icon: <PiGameControllerFill className="text-xl" /> },
+  // { label: 'Game Dev', icon: <PiGameControllerFill className="text-xl" /> },
 ];
 
 const techStack = [
@@ -27,9 +27,9 @@ const techStack = [
   { label: 'Python', icon: <SiPython /> },
   { label: 'TensorFlow', icon: <SiTensorflow /> },
   { label: 'Arduino', icon: <SiArduino /> },
-  { label: 'Unity', icon: <SiUnity /> },
-  { label: 'TypeScript', icon: <SiTypescript /> },
-  { label: 'PostgreSQL', icon: <SiPostgresql /> },
+  // { label: 'Unity', icon: <SiUnity /> },
+  // { label: 'TypeScript', icon: <SiTypescript /> },
+  // { label: 'PostgreSQL', icon: <SiPostgresql /> },
 ];
 
 const About = () => {
@@ -43,13 +43,15 @@ const About = () => {
       transition={{ duration: 0.6 }}
     >
       <div className="absolute top-0 left-0 right-0 section-retro-line"></div>
+      <div className="pointer-events-none absolute left-6 top-28 text-pastel-pink text-4xl animate-pixel-bounce" aria-hidden="true">★</div>
+      <div className="pointer-events-none absolute right-8 bottom-16 text-pastel-blue text-5xl animate-pixel-bounce" style={{ animationDelay: '0.5s' }} aria-hidden="true">★</div>
       
       {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-16 pt-10">
         {/* Section Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-pink text-black retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-pink text-[rgb(34,48,65)] retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider mb-6">
           <i className="bx bx-user" aria-hidden="true"></i>
-          <span>CHARACTER SELECT</span>
+          <span>PROFILE</span>
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-retro font-bold tracking-widest text-text-primary">
@@ -99,10 +101,13 @@ const About = () => {
           {/* Bio paragraphs */}
           <div className="space-y-4 mb-10 retro-card bg-surface p-6 text-text-secondary leading-relaxed tracking-wide shadow-[4px_4px_0px_0px_rgba(var(--color-shadow))]">
             <p>
-              I&apos;m an Electrical Engineering graduate who combines software development, machine learning, and technology education to build meaningful digital solutions. My background spans frontend and backend development, AI-powered applications, and IoT systems.
+              I&apos;m an Electrical Engineering graduate with a background in software development, machine learning, IoT, and embedded systems. I enjoy working across different areas of technology, from building web applications and AI-powered solutions to developing hardware-based systems.
             </p>
             <p>
-              Over the years, I&apos;ve worked on production web applications, mentored learners in machine learning and programming, and developed projects around embedded systems and long-range communication. I&apos;m especially interested in creating technology that is both practical and impactful.
+              I&apos;ve worked on web applications, machine learning projects, and IoT systems involving microcontrollers, sensors, and wireless communication. I also have experience in technology education and mentoring, which has strengthened my ability to communicate technical concepts and work with people from different backgrounds.
+            </p>
+            <p>
+              I&apos;m interested in building technology that solves real problems, while continuously learning and exploring new areas of development.
             </p>
           </div>
 
@@ -127,7 +132,7 @@ const About = () => {
           {/* Tech Stack Grid */}
           <div>
             <h3 className="text-lg font-retro uppercase tracking-widest text-text-primary mb-4 flex items-center gap-2">
-              <span className="text-pastel-blue">✦</span> INVENTORY
+              <i className="bx bx-code-alt text-pastel-blue" aria-hidden="true"></i> TECH STACK
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {techStack.map((tech) => (

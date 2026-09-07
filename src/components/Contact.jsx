@@ -102,6 +102,8 @@ const Contact = () => {
       className="relative py-20 px-4 lg:px-20 overflow-hidden"
     >
       <div className="absolute top-0 left-0 right-0 section-retro-line"></div>
+      <div className="pointer-events-none absolute left-6 top-28 text-pastel-blue text-5xl animate-pixel-bounce" aria-hidden="true">★</div>
+      <div className="pointer-events-none absolute right-8 bottom-16 text-pastel-pink text-4xl animate-pixel-bounce" style={{ animationDelay: '0.5s' }} aria-hidden="true">★</div>
 
       <div className="relative z-10 max-w-6xl mx-auto pt-10">
         {/* Section Badge */}
@@ -112,7 +114,7 @@ const Contact = () => {
           transition={{ duration: 0.5 }}
           className="flex justify-center mb-6"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-pink text-black retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-pastel-pink text-[rgb(34,48,65)] retro-border shadow-[2px_2px_0px_0px_rgba(var(--color-shadow))] font-retro text-xl uppercase tracking-wider">
             <i className="bx bx-envelope" aria-hidden="true"></i>
             <span>COMMUNICATIONS</span>
           </div>
@@ -304,7 +306,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="btn-retro w-full flex items-center justify-center gap-2"
+                  className="btn-retro dark:bg-accent dark:text-[rgb(34,48,65)] w-full flex items-center justify-center gap-2"
                 >
                   {status === 'loading' ? 'SENDING...' : 'SEND MESSAGE'}
                   <FiSend className={`text-xl ${status === 'loading' ? 'animate-pixel-bounce' : ''}`} />
